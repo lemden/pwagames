@@ -14,7 +14,7 @@ const App: React.FC = () => {
           Presentation={CardBoardPresentation}
           cardType="numbers"
           settings={{
-            hideTimeout: 250,
+            hideTimeout: 2000,
           }}
       />
     </>

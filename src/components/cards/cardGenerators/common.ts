@@ -70,5 +70,5 @@ const getNumberCards = (level: GameLevel): ICardDefinition[] => {
                         cardStyle: getRandomNumberCardStyle(index + 1 + ""),
                         cardType: "numbers",
                     }));
-    return temp.concat(temp); // .sort(() => Math.random() - 0.5);
+    return temp.concat(temp).sort(() => Math.random() - 0.5);
 };
