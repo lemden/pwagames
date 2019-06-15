@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import CardBoardPresentation from './components/CardField';
-import MatchingCardsGame, { MatchingCardPlayer } from './components/MatchingCardsGame';
+import CardBoardPresentation from './components/cards/CardField';
+import MatchingCardsGame, { MatchingCardPlayer } from './components/cards/MatchingCardsGame';
 
 const App: React.FC = () => {
   return (

@@ -1,0 +1,17 @@
+.cardField {
+    display: inline-block;
+    background: linear-gradient(#0011ff, #a164e6, #d8539c, red, blue);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 0;
+    cursor: pointer;
+    user-select: none;
+}
+.cardContainer {
+    display: inline-block;
+    position: absolute;
+    padding: 5px;
+    cursor: pointer;
+}

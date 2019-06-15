@@ -1,0 +1,36 @@
+@keyframes example {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.card {
+    display: inline-flex;
+    position: relative;
+    background-color: royalblue;
+    width: 100%;
+    height: 100%;
+    border: solid 10px black;
+}
+.card.removed {
+    animation: bubble .5s forwards;
+    animation-name: example;
+}
+.text {
+    display: inline-flex;
+    background: black;
+    color: orange;
+    width: 50%;
+    height: 50%;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 40px;
+}
