@@ -1,0 +1,87 @@
+.scoreMenu {
+    display: flex;
+    width: 100vw;
+}
+.scoreMenu > div {
+    border: solid 5px white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: .5;
+    transition: .25s;
+    justify-content: center;
+}
+.scoreMenu > div.active {
+    border-color: #eeff00;
+    display: flex;
+    opacity: 1;
+}
+.scoreMenu > div:nth-child(odd) {
+    background-color: #1fa703;
+    color: black;
+}
+.scoreMenu > div:nth-child(odd) > div:last-child {
+    background-color: #167a02;
+    color: white;
+}
+
+.scoreMenu > div:nth-child(even) {
+    background-color: #4271f4;
+    color: black;
+}
+.scoreMenu > div:nth-child(even) > div:last-child {
+    background-color: #29489e;
+    color: white;
+}
+.scoreMenu > div > div:first-child {
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: bolder;
+    padding: 5px 0 0 5px;
+    text-align: center;
+    overflow: hidden;
+    font-size: 22px;
+}
+
+.scoreMenu > div > div:last-child {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-weight: bolder;
+    padding-top: 5px;
+    display: flex;
+    align-content: center;
+    line-height: 37px;
+    font-size: 40px;
+    justify-content: center;
+}
+
+.scoreMenuContainer {
+    position: relative;
+}
+
+.multiplier {
+    position: absolute;
+    top: calc(100% + 18px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    border-radius: 100px;
+    color: #c41d00;
+    background: #ffc400;
+    border: solid 5px #292300;
+    display: inline-block;
+    width: 75px;
+    height: 50px;
+    font-size: 35px;
+    line-height: 37px;
+    font-weight: bolder;
+    text-align: center;
+}
+.multiplier.single {
+    top: 10px;
+    right: 10px;
+    left: initial;
+    transform: initial;
+}
