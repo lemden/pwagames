@@ -6,13 +6,14 @@ import { CardType, GameLevel, getNumberCards, ICardDefinition } from "./cardGene
 export interface ICardClickParameters {
     cardState: ICardState;
 }
-export interface ICardsSelectedEvent {
+export interface ICardsSelectedParameters {
     selectedCards: SelectedCards;
 }
-export interface ICardClickEvent<T> extends IEvent<T>{}
+export interface ICardsSelectedEvent extends IEvent<ICardsSelectedParameters> {}
+export interface ICardClickEvent extends IEvent<ICardClickParameters>{}
 
-export const CardClickEvent: ICardClickEvent<ICardClickParameters> = {name: "CardClickEvent"};
-export const CardSelectedEvent: ICardClickEvent<ICardsSelectedEvent> = {name: "CardSelectedEvent"};
+export const CardClickEvent: ICardClickEvent = {name: "CardClickEvent"};
+export const CardSelectedEvent: ICardsSelectedEvent = {name: "CardSelectedEvent"};
 
 export interface INoMoreCardsEvent extends IEvent<{}> {}
 export const NoMoreCardsEvent: INoMoreCardsEvent = { name: "NoMoreCardsEvent" };
@@ -29,7 +30,9 @@ interface IMatchingCardsProps {
     level: GameLevel;
     cardType: CardType;
     settings: {
-        hideTimeout?: number;
+        hideIfFailedTimeout?: number;
+        hideIfSucceedTimeout?: number;
+        timeForRemoveCards?: number;
     },
     Presentation: React.FC<IMatchingCardsFieldProps>;
 }
@@ -144,14 +147,15 @@ class MatchingCardsBoard
             onComplete: () => void) {
         this.setState({ removedCards, });
         setTimeout(
-            () => onComplete(), 1000
+            () => onComplete(),
+            this.props.settings.timeForRemoveCards || 1000
         );
     }
 
     private checkSelectedCards(selectedCards: SelectedCards): Promise<IEarnedPoints> {
         return new Promise((resolve) => {
-            setTimeout(() => {
-                if (this.areTwoCardsTheSame(selectedCards)) {
+            if (this.areTwoCardsTheSame(selectedCards)) {
+                setTimeout(() => {
                     this.showRemovedCards(
                         selectedCards,
                         () => {
@@ -161,11 +165,13 @@ class MatchingCardsBoard
                             );
                         }
                     );
-                } else {
+                }, this.props.settings.hideIfSucceedTimeout || 1000);
+            } else {
+                setTimeout(() => {
                     this.hideSelectedCards(selectedCards);
                     resolve({ points: 0 });
-                }
-            }, this.props.settings.hideTimeout || 1000);
+                }, this.props.settings.hideIfFailedTimeout || 1000)
+            }
         });
     }
 

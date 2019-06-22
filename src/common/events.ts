@@ -1,16 +1,23 @@
-interface ISubscriber<T> {
-    event: IEvent<T>;
-    callback(parameters: T): void;
+interface ISubscriber<P, T extends IEvent<P>> {
+    event: T;
+    callback(parameters: P): void;
 }
-const subscribers: ISubscriber<any>[] = [];
+const subscribers: ISubscriber<any, any>[] = [];
 
 export 
-interface IEvent<T> {
+interface IEvent<P> {
     readonly name: string;
+    verify?(parameter: P): boolean;
 }
 
 export
-function emit<T>(event: IEvent<T>, parameters?: T) {
+function emit<P, T extends IEvent<P>>(event: T, parameters?: P) {
+    if (typeof(event.verify) === "function"
+            && typeof(parameters) !== "undefined") {
+        if (!event.verify(parameters)) {
+            throw new Error("Invalid Parameter ["+ event.name +"]");
+        }
+    }
     let subscribersFound = 0;
     subscribers
         .forEach((s) => {
@@ -27,10 +34,10 @@ function emit<T>(event: IEvent<T>, parameters?: T) {
 type UnsubscribeMe = () => void;
 
 export
-function subscribe<T>(
-        event: IEvent<T>, 
-        callback: (parameters: T) => void): UnsubscribeMe {
-    const subscriber: ISubscriber<T> = {
+function subscribe<P, E extends IEvent<P>>(
+        event: E, 
+        callback: (parameters: P) => void): UnsubscribeMe {
+    const subscriber: ISubscriber<P, E> = {
         event, callback
     };
     subscribers.push(subscriber);

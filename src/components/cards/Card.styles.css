@@ -10,14 +10,32 @@
 .card {
     display: inline-flex;
     position: relative;
-    background-color: royalblue;
+    background-color: #cecece;
     width: 100%;
     height: 100%;
-    border: solid 10px black;
+    border: solid 2px #bebdbd;
     perspective: 1000px;
 }
 .card.selected .card-inner {
     transform: rotateY(180deg);
+}
+
+.card.selected .card-front .text {
+  opacity: 0;
+  transition: .3s;
+}
+.card.selected .card-back .text {
+  opacity: 1;
+  transition: 1s;
+}
+
+.card .card-front .text {
+  opacity: 1;
+  transition: 1s;
+}
+.card .card-back .text {
+  opacity: 0;
+  transition: .3s;
 }
   
 .card.removed {
@@ -26,8 +44,8 @@
 }
 .text {
     display: inline-flex;
-    background: black;
-    color: orange;
+    background: #858484;
+    color: white;
     width: 50%;
     height: 50%;
     left: 50%;
@@ -44,7 +62,7 @@
   width: 100%;
   height: 100%;
   text-align: center;
-  transition: transform 0.8s;
+  transition: transform 0.5s;
   transform-style: preserve-3d;
 }
 .card-front, .card-back {
@@ -52,6 +70,11 @@
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.card-front .text, .card-back .text {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 .card-front {
   background-color: #bbb;

@@ -25,9 +25,9 @@ export
 const getRandomNumberCardStyle = (text: string): ICardNumberStyle  => {
     return {
         color: {
-            red: Math.round(Math.random() * 255),
-            green: Math.round(Math.random() * 255),
-            blue: Math.round(Math.random() * 255),
+            red: Math.round(Math.random() * 50 + 205),
+            green: Math.round(Math.random() * 50 + 205),
+            blue: Math.round(Math.random() * 50 + 205),
         },
         text
     }
@@ -70,5 +70,5 @@ const getNumberCards = (level: GameLevel): ICardDefinition[] => {
                         cardStyle: getRandomNumberCardStyle(index + 1 + ""),
                         cardType: "numbers",
                     }));
-    return temp.concat(temp).sort(() => Math.random() - 0.5);
+    return temp.concat(temp); // .sort(() => Math.random() - 0.5);
 };

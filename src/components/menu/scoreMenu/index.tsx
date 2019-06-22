@@ -32,9 +32,9 @@ class ScoreMenu extends React.Component<IScoreMenuProps> {
                                 style={{
                                 width: `${singlePlayerContainerWidth}%`
                             }}>
-                                <div>
+                                {this.props.players.length > 1 && <div>
                                     {player.name}
-                                </div>
+                                </div>}
                                 <div>
                                     {player.score}
                                 </div>

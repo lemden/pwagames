@@ -1,13 +1,16 @@
 .cardField {
     display: inline-block;
-    background: linear-gradient(#0011ff, #a164e6, #d8539c, red, blue);
+    background: #cecece;
+    box-shadow: 0px 0 5px 4px rgba(0,0,0,.2);
     position: fixed;
+    border: solid 2px #bebdbd;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     line-height: 0;
     cursor: pointer;
     user-select: none;
+    z-index: 2;
 }
 .cardContainer {
     display: inline-block;

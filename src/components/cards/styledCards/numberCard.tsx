@@ -32,7 +32,9 @@ const NumberCard: React.StatelessComponent<INumberCardProps> = (props: INumberCa
                 </div>
                 <div className={"card-back"}
                     style={selectedStyle}>
-                    <span className={"text"}>{props.cardStyle.text}</span>
+                    <span className={"text"}>
+                        {props.cardStyle.text}
+                    </span>
                 </div>
             </div>
         </div>

@@ -21,8 +21,8 @@ const getFieldContainerSizeWithMenu = (windowWidth: number, windowHeight: number
         windowWidth, windowHeight
     );
     return {
-        containerWidth: containerSize.containerWidth - MatchingCardSettings.Layout.Menu.sideMenuWidth,
-        containerHeight: containerSize.containerHeight - MatchingCardSettings.Layout.Menu.topMenuHeight,
+        containerWidth: containerSize.containerWidth - MatchingCardSettings.Layout.Menu.sideMenuWidth - MatchingCardSettings.Layout.padding,
+        containerHeight: containerSize.containerHeight - MatchingCardSettings.Layout.Menu.topMenuHeight - MatchingCardSettings.Layout.padding,
     }
 }
 

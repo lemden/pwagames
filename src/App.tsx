@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import CardBoardPresentation from './components/cards/CardField';
 import MatchingCardsGame, { MatchingCardPlayer } from './components/cards/MatchingCardsGame';
+import DialogView from './components/dialog/dialogView';
 
 const App: React.FC = () => {
   return (
@@ -14,9 +15,12 @@ const App: React.FC = () => {
           Presentation={CardBoardPresentation}
           cardType="numbers"
           settings={{
-            hideTimeout: 2000,
+            hideIfFailedTimeout: 1000,
+            hideIfSucceedTimeout: 500,
+            timeForRemoveCards: 250,
           }}
       />
+      <DialogView />
     </>
   );
 }

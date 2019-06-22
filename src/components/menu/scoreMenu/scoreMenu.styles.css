@@ -1,9 +1,12 @@
 .scoreMenu {
     display: flex;
-    width: 100vw;
+    width: 99vw;
+    position: fixed;
+    top: 0;
+    left: 0.5vw;
 }
 .scoreMenu > div {
-    border: solid 5px white;
+    border: solid 2px white;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,16 +15,19 @@
     justify-content: center;
 }
 .scoreMenu > div.active {
-    border-color: #eeff00;
+    border-color: #bebdbd;
     display: flex;
     opacity: 1;
 }
 .scoreMenu > div:nth-child(odd) {
-    background-color: #1fa703;
-    color: black;
+    background-color: #cecece;
+    border-radius: 5px;
+    color: white;
+    box-shadow: 0px 0 5px 4px rgba(0,0,0,.2);
 }
 .scoreMenu > div:nth-child(odd) > div:last-child {
-    background-color: #167a02;
+    background-color: #888888;
+    border: solid 5px white;
     color: white;
 }
 
@@ -30,7 +36,7 @@
     color: black;
 }
 .scoreMenu > div:nth-child(even) > div:last-child {
-    background-color: #29489e;
+    background-color: #c4c4c4;
     color: white;
 }
 .scoreMenu > div > div:first-child {
@@ -45,16 +51,16 @@
 }
 
 .scoreMenu > div > div:last-child {
-    width: 50px;
-    height: 50px;
+
     text-align: center;
     font-weight: bolder;
     padding-top: 5px;
-    display: flex;
-    align-content: center;
+    display: inline-block;
     line-height: 37px;
-    font-size: 40px;
-    justify-content: center;
+    font-size: 70px;
+    width: auto;
+    padding: 15px;
+    border-radius: 10px;
 }
 
 .scoreMenuContainer {
@@ -68,9 +74,9 @@
     transform: translate(-50%, -50%);
     z-index: 1;
     border-radius: 100px;
-    color: #c41d00;
-    background: #ffc400;
-    border: solid 5px #292300;
+    color: #ffffff;
+    background: #c5c5c5;
+    border: solid 5px white;
     display: inline-block;
     width: 75px;
     height: 50px;

@@ -1,13 +1,14 @@
 import * as React from "react";
-import MatchingCardsBoard, { IMatchingCardsProps, CardSelectedEvent, ICardsSelectedEvent, IEarnedPoints, NoMoreCardsEvent, INoMoreCardsEvent } from "./MatchingCards";
+import MatchingCardsBoard, { IMatchingCardsProps, CardSelectedEvent, IEarnedPoints, NoMoreCardsEvent, INoMoreCardsEvent, ICardsSelectedParameters } from "./MatchingCards";
 import { subscribe, IEvent } from "../../common/events";
 import { IPlayer } from "../../common/game/interfaces";
 import ScoreMenu from "../menu/scoreMenu";
+import dialog from "../dialog/dialog";
 
 export
 type IMatchingGamePlayer = IPlayer<IEarnedPoints, IEarnedPoints, IEarnedPoints>;
 
-export interface IMatchingCardsGameOver extends IEvent<IMatchingGamePlayer>{}
+export interface IMatchingCardsGameOver extends IEvent<{}>{}
 
 const MatchingCardsGameOver: IMatchingCardsGameOver = {name: ""}
 
@@ -62,8 +63,8 @@ class MatchingCardsGame extends React.Component<IMatchingCardsGameProps, IMatchi
         this.cancelSubscriptions.push(
             subscribe(
                 CardSelectedEvent,
-                (event: ICardsSelectedEvent) => {
-                    this.onMoveComplete(event); 
+                (parameters: ICardsSelectedParameters) => {
+                    this.onMoveComplete(parameters); 
                 }
             )
         );
@@ -84,11 +85,23 @@ class MatchingCardsGame extends React.Component<IMatchingCardsGameProps, IMatchi
 
     private onNoMoreCards(){
         const winner = this.getLeader();
-        console.log(winner);
+        dialog.showAsDialog<void>((onOkClick) => (
+            <div>
+                <h1>Game Over!</h1>
+                <div>Score: {winner.getMyState().points}</div>
+                <button onClick={() => onOkClick()}>
+                    New Game
+                </button>
+            </div>
+        ))
+        .then(() => {
+            
+        });
     }
 
     public componentWillUnmount(){
-        this.cancelSubscriptions.forEach(c => c());
+        this.cancelSubscriptions
+            .forEach(c => c());
     }
 
     public getActivePlayer(){
@@ -96,11 +109,11 @@ class MatchingCardsGame extends React.Component<IMatchingCardsGameProps, IMatchi
     }
 
     private onMoveComplete(
-        event: ICardsSelectedEvent) {
+        parameters: ICardsSelectedParameters) {
         this.setState(
             { lockedWhileStepInProgress: true },
             () => {
-                this.performMove(event)
+                this.performMove(parameters)
                     .then((moveResults) => {
                         this.setState(
                             { lockedWhileStepInProgress: false, lastEarnedPoints: moveResults.justEarnedPoints },
@@ -111,14 +124,14 @@ class MatchingCardsGame extends React.Component<IMatchingCardsGameProps, IMatchi
         );
     }
 
-    private performMove(event: ICardsSelectedEvent): Promise<{
+    private performMove(parameters: ICardsSelectedParameters): Promise<{
                                                         playerTotalEarnedPoint: IEarnedPoints, 
                                                         justEarnedPoints: IEarnedPoints,
                                                     }> {
         if (this.matchingCardsBoardRef.current) {
             return this.matchingCardsBoardRef
                     .current
-                    .doNextMove(event.selectedCards)
+                    .doNextMove(parameters.selectedCards)
                     .then(justEarnedPoints => {
                         return this.getActivePlayer()
                                 .applyMoveResult({ points: justEarnedPoints.points * this.state.pointsMultiplier})

@@ -1,7 +1,7 @@
 import * as React from "react";
 import NumberCard from "./styledCards/numberCard";
 import "./Card.styles.css";
-import { ICardState, ICardClickParameters, CardClickEvent } from "./MatchingCards";
+import { ICardState, ICardClickParameters, CardClickEvent, ICardClickEvent } from "./MatchingCards";
 import { emit } from "../../common/events";
 
 interface ICardProps {
@@ -11,7 +11,7 @@ interface ICardProps {
 
 const Card: React.FC<ICardProps> = (props: ICardProps): JSX.Element => {
     const onCardClick = () => {
-        emit<ICardClickParameters>(CardClickEvent, {
+        emit<ICardClickParameters, ICardClickEvent>(CardClickEvent, {
             cardState: props.cardState,
         });
     };
