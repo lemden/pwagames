@@ -49,9 +49,8 @@ class DialogView
         }
         return (
             <> 
-                <div onClick={this.hide} 
-                    className={"modal-background"}></div>
-                <dialog>
+                <div className={"modal-background"}></div>
+                <dialog className={"game-dialog"}>
                     {this.state.currentRender()}
                 </dialog>
             </>

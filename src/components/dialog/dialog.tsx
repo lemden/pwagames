@@ -29,6 +29,7 @@ class Dialog {
         return new Promise(
             (resolve, reject) => {
                 const resolveAndClose = (r: ExpectedResult) => {
+                    console.log("Resolve!")
                     resolve(r);
                     this.closeCurrentDialog();
                 };

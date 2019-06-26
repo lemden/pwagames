@@ -1,0 +1,8 @@
+button.game-button {
+    display: block;
+    padding: 10px 50px;
+    border-radius: 5px;
+    border: solid 1px #cecece;
+    background-color: #f0eded;
+    width: 100%;
+}

@@ -1,9 +1,11 @@
 import * as React from "react";
 import MatchingCardsBoard, { IMatchingCardsProps, CardSelectedEvent, IEarnedPoints, NoMoreCardsEvent, INoMoreCardsEvent, ICardsSelectedParameters } from "./MatchingCards";
-import { subscribe, IEvent } from "../../common/events";
+import { subscribe, IEvent, emit } from "../../common/events";
 import { IPlayer } from "../../common/game/interfaces";
 import ScoreMenu from "../menu/scoreMenu";
 import dialog from "../dialog/dialog";
+import { MCNextLevelEvent } from "./MatchingCardsSinglePlayerGameController";
+import "../button/button.styles.css";
 
 export
 type IMatchingGamePlayer = IPlayer<IEarnedPoints, IEarnedPoints, IEarnedPoints>;
@@ -28,9 +30,10 @@ interface IMatchingCardsGameState {
 
 export
 class MatchingCardPlayer implements IPlayer<IEarnedPoints, IEarnedPoints, IEarnedPoints> {
-    private earnedPoints: IEarnedPoints = { points: 0 };
+    private earnedPoints: IEarnedPoints;
 
-    constructor(public readonly name: string){
+    constructor(public readonly name: string, initalPoints: number = 0){
+        this.earnedPoints = { points: initalPoints };
     }
     
     public applyMoveResult(result: IEarnedPoints): Promise<IEarnedPoints> {
@@ -85,17 +88,21 @@ class MatchingCardsGame extends React.Component<IMatchingCardsGameProps, IMatchi
 
     private onNoMoreCards(){
         const winner = this.getLeader();
-        dialog.showAsDialog<void>((onOkClick) => (
-            <div>
-                <h1>Game Over!</h1>
-                <div>Score: {winner.getMyState().points}</div>
-                <button onClick={() => onOkClick()}>
-                    New Game
-                </button>
-            </div>
-        ))
+        dialog.showAsDialog<void>((onOkClick) => {
+                return (
+                    <div>
+                        <h1>You did this!</h1>
+                        <button className={"game-button"} onClick={() => onOkClick()}>
+                            Go to Next Level!
+                        </button>
+                    </div>
+                );
+            }
+        )
         .then(() => {
-            
+            emit(MCNextLevelEvent, {
+                winner
+            });
         });
     }
 
