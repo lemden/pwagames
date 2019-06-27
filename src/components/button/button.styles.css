@@ -1,8 +1,10 @@
 button.game-button {
     display: block;
     padding: 10px 50px;
-    border-radius: 5px;
-    border: solid 1px #cecece;
+    border-radius: 10px;
+    border: solid 3px #cecece;
     background-color: #f0eded;
     width: 100%;
+    font-weight: bolder;
+    font-size: 15px;
 }

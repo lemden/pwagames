@@ -92,9 +92,12 @@ class MatchingCardsGame extends React.Component<IMatchingCardsGameProps, IMatchi
                 return (
                     <div>
                         <h1>You did this!</h1>
-                        <button className={"game-button"} onClick={() => onOkClick()}>
-                            Go to Next Level!
-                        </button>
+                        <main>+ {winner.getMyState().points}</main>
+                        <div className={"dialog-buttons"}>
+                            <button className={"game-button"} onClick={() => onOkClick()}>
+                                Go to Next Level!
+                            </button>
+                        </div>
                     </div>
                 );
             }

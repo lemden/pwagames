@@ -68,7 +68,7 @@
 }
 
 .multiplier {
-    position: absolute;
+    position: fixed;
     top: calc(100% + 18px);
     left: 50%;
     transform: translate(-50%, -50%);
