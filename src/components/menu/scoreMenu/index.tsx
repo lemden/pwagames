@@ -1,6 +1,7 @@
 import * as React from "react";
 import "./scoreMenu.styles.css";
 import { MatchingCardSettings } from "../../../settings";
+import Counter from "../counter/counter";
 
 export interface IScoredPlayer {
     score: number;
@@ -36,13 +37,20 @@ class ScoreMenu extends React.Component<IScoreMenuProps> {
                                     {player.name}
                                 </div>}
                                 <div>
-                                    {player.score}
+                                    <Counter
+                                        value={player.score}
+                                        numberOfSymbols={4}
+                                        animation={{
+                                            initialChangeTimeout: 50,
+                                            timeoutMultiplier: 1.1,
+                                        }}
+                                    />
                                 </div>
                             </div>
                         )
                     )}
                 </div>
-                <div className={`multiplier ${this.props.players.length === 1 ? "single" : ""}`}>+{this.props.pointsMultiplier}</div>
+                <div className={`multiplier ${this.props.players.length === 1 ? "single" : ""}`}>x{this.props.pointsMultiplier}</div>
             </div>
         );
     }
