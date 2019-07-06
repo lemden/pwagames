@@ -87,25 +87,8 @@ class MatchingCardsGame extends React.Component<IMatchingCardsGameProps, IMatchi
     }
 
     private onNoMoreCards(){
-        const winner = this.getLeader();
-        dialog.showAsDialog<void>((onOkClick) => {
-                return (
-                    <div>
-                        <h1>You did this!</h1>
-                        <main>+ {winner.getMyState().points}</main>
-                        <div className={"dialog-buttons"}>
-                            <button className={"game-button"} onClick={() => onOkClick()}>
-                                Go to Next Level!
-                            </button>
-                        </div>
-                    </div>
-                );
-            }
-        )
-        .then(() => {
-            emit(MCNextLevelEvent, {
-                winner
-            });
+        emit(MCNextLevelEvent, {
+            winner: this.getLeader(),
         });
     }
 
@@ -144,7 +127,7 @@ class MatchingCardsGame extends React.Component<IMatchingCardsGameProps, IMatchi
                     .doNextMove(parameters.selectedCards)
                     .then(justEarnedPoints => {
                         return this.getActivePlayer()
-                                .applyMoveResult({ points: justEarnedPoints.points * this.state.pointsMultiplier})
+                                .applyMoveResult({ points: justEarnedPoints.points * ( this.state.pointsMultiplier )})
                                 .then((playerTotalEarnedPoint) => ({
                                     playerTotalEarnedPoint,
                                     justEarnedPoints
@@ -169,7 +152,7 @@ class MatchingCardsGame extends React.Component<IMatchingCardsGameProps, IMatchi
             let pointsMultiplier = this.state.pointsMultiplier;
             if (this.state.currentPlayerIndex 
                 === this.state.prevPlayerIndex) {
-                pointsMultiplier ++;
+                pointsMultiplier += pointsMultiplier + 1;
             }
             this.setState({ prevPlayerIndex, pointsMultiplier, });
         }

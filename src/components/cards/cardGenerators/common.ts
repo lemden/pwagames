@@ -59,7 +59,18 @@ const getColsAndRows = (numberOfCards: number) => {
 
 export
 const getNumberOfUniqueCards = (level: GameLevel) => {
-    return (level + 2);
+    return {
+        1: 3,
+        2: 4,
+        3: 5,
+        4: 6,
+        5: 8,
+        6: 9,
+        7: 10,
+        8: 12,
+        9: 14,
+        10: 15
+    }[level];
 };
 
 export
