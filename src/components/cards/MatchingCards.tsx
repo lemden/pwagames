@@ -161,7 +161,7 @@ class MatchingCardsBoard
                         () => {
                             this.removeSelectedCards(
                                 selectedCards,
-                                () => resolve({ points: 1 })
+                                () => resolve({ points: 23 }) // why not ?
                             );
                         }
                     );

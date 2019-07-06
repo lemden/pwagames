@@ -13,9 +13,9 @@ dialog.game-dialog {
     z-index: 1001;
     min-width: 75vw;
     min-height: 25vh;
-    top: 5vh;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, -50%);
     border: solid 2px rgb(102, 101, 101);
     border-radius: 10px;
     background-color: #e9e9e9;
