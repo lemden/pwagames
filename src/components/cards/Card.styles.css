@@ -26,12 +26,12 @@
 }
 .card.selected .card-back .text {
   opacity: 1;
-  transition: 1s;
+  transition: .4s;
 }
 
 .card .card-front .text {
   opacity: 1;
-  transition: 1s;
+  transition: .4s;
 }
 .card .card-back .text {
   opacity: 0;

@@ -1,0 +1,29 @@
+@keyframes hide-additional-time-indicator {
+    0% {
+        opacity: 0.8;
+        transform:  translate(-50%, 0%) scale(.5);
+    }
+    100% {
+        opacity: 0;
+        transform:  translate(-50%, 0%) scale(1);
+    }
+}
+
+.additional-time-indicator {
+    font-size: 10em;
+    position: absolute;
+    z-index: 5;
+    top: 0%;
+    left: 50%;
+    display: inline-block;
+    font-weight: bolder;
+    transform: translate(-50%, 0%);
+    display: none;
+    white-space: nowrap;
+}
+
+.additional-time-indicator.open {
+    display: inline-block;
+    animation-name: hide-additional-time-indicator;
+    animation-duration: .5s;
+}

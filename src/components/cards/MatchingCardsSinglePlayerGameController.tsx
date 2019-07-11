@@ -1,10 +1,11 @@
 import * as React from "react";
 import MatchingCardsGame, { MatchingCardPlayer, IMatchingGamePlayer } from "./MatchingCardsGame";
 import CardBoardPresentation from "./CardField";
-import { GameLevel } from "./cardGenerators/common";
+import { GameLevel, getGameSettings } from "./cardGenerators/common";
 import { IEvent, subscribe } from "../../common/events";
 import dialog from "../dialog/dialog";
 import { NoMoreCardsEvent } from "./MatchingCards";
+import { TimeOverEvent } from "../countdown";
 
 export interface IMCControllerState {
     level: GameLevel;
@@ -30,35 +31,33 @@ class MatchingCardsSinglePlayerGameController extends React.Component<{}, IMCCon
         subscribe(MCNextLevelEvent, (params: IMCNextLevelParams) => {
             this.onNextLevel(params.winner);
         });
+        subscribe(TimeOverEvent, () => {
+            this.onGameOver("Time Over");
+        });
     }
     
     private onNextLevel(winner: IMatchingGamePlayer) {
         const level = this.state.level + 1 as GameLevel;
         if (level <= 10) {
-            dialog.showAsDialog<void>((onOkClick) => {
-                return (<div>
-                    <h1>You did this!</h1>
-                    <button className={"game-button"} onClick={() => onOkClick()}>
-                        Next Level!
-                    </button>
-                </div>);
-            })
-            .then(() => {
-                this.setState({ level, totalScore: winner.getMyState().points });
-            });
+            // todo: indicate somehow this on the screen
+            this.setState({ level, totalScore: winner.getMyState().points });
         } else {
-            dialog.showAsDialog<void>((onOkClick) => {
-                return (<div>
-                    <h1>Game Over!</h1>
-                    <button className={"game-button"} onClick={() => onOkClick()}>
-                        Start New Game!
-                    </button>
-                </div>);
-            })
-            .then(() => {
-                this.setState({ level: 1, totalScore: 0, gameNumber: this.state.gameNumber + 1 });
-            });
+            this.onGameOver();
         }
+    }
+
+    private onGameOver(title?: string){
+        dialog.showAsDialog<void>((onOkClick) => {
+            return (<div>
+                <h1>{title || "Game Over"}</h1>
+                <button className={"game-button"} onClick={() => onOkClick()}>
+                    New Game
+                </button>
+            </div>);
+        })
+        .then(() => {
+            this.setState({ level: 1, totalScore: 0, gameNumber: this.state.gameNumber + 1 });
+        });
     }
 
     public render() {
@@ -73,8 +72,8 @@ class MatchingCardsSinglePlayerGameController extends React.Component<{}, IMCCon
                 Presentation={CardBoardPresentation}
                 cardType="numbers"
                 settings={{
-                    hideIfFailedTimeout: 1000,
-                    hideIfSucceedTimeout: 500,
+                    hideIfFailedTimeout: 500,
+                    hideIfSucceedTimeout: 250,
                     timeForRemoveCards: 250,
                 }}
             />

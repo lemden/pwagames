@@ -6,6 +6,9 @@ import ScoreMenu from "../menu/scoreMenu";
 import dialog from "../dialog/dialog";
 import { MCNextLevelEvent } from "./MatchingCardsSinglePlayerGameController";
 import "../button/button.styles.css";
+import Countdown, { AdditionalTime } from "../countdown";
+import { getGameSettings } from "./cardGenerators/common";
+import AdditionalTimeIndicator from "../countdown/additionalTimeIndicator";
 
 export
 type IMatchingGamePlayer = IPlayer<IEarnedPoints, IEarnedPoints, IEarnedPoints>;
@@ -52,6 +55,7 @@ export default
 class MatchingCardsGame extends React.Component<IMatchingCardsGameProps, IMatchingCardsGameState> {
     private matchingCardsBoardRef: React.RefObject<MatchingCardsBoard>;
     private cancelSubscriptions: Array<() => void> = [];
+    private afterMoveComplete: (() => void) | undefined;
 
     constructor(props: IMatchingCardsGameProps) {
         super(props);
@@ -87,9 +91,11 @@ class MatchingCardsGame extends React.Component<IMatchingCardsGameProps, IMatchi
     }
 
     private onNoMoreCards(){
-        emit(MCNextLevelEvent, {
-            winner: this.getLeader(),
-        });
+        this.afterMoveComplete = () => {
+            emit(MCNextLevelEvent, {
+                winner: this.getLeader(),
+            });
+        };
     }
 
     public componentWillUnmount(){
@@ -147,14 +153,25 @@ class MatchingCardsGame extends React.Component<IMatchingCardsGameProps, IMatchi
             this.setState({
                 currentPlayerIndex: nextPlayerIndex, 
                 prevPlayerIndex,
-                pointsMultiplier: 1, });
+                pointsMultiplier: 1, }, () => {
+                    if(this.afterMoveComplete !== undefined) {
+                        this.afterMoveComplete();
+                    }
+                });
         } else {
             let pointsMultiplier = this.state.pointsMultiplier;
             if (this.state.currentPlayerIndex 
                 === this.state.prevPlayerIndex) {
                 pointsMultiplier += pointsMultiplier + 1;
+                emit(AdditionalTime, {
+                    time: 5,
+                });
             }
-            this.setState({ prevPlayerIndex, pointsMultiplier, });
+            this.setState({ prevPlayerIndex, pointsMultiplier }, () => {
+                if(this.afterMoveComplete !== undefined) {
+                    this.afterMoveComplete();
+                }
+            });
         }
     }
     
@@ -178,6 +195,14 @@ class MatchingCardsGame extends React.Component<IMatchingCardsGameProps, IMatchi
                     cardType={this.props.cardType}
                     settings={this.props.settings}
                 />
+
+                <Countdown
+                    initialValue={getGameSettings(this.props.level).time} 
+                    animation={{
+                        timeout: 1000,
+                    }}
+                />
+                <AdditionalTimeIndicator />
             </>
         );
     }

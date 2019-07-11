@@ -31,6 +31,12 @@ class SingleNumberCounter extends React.Component<ISingleNumberCounterProps, ISi
         this.updateState(props.value, false, this.props.animation.initialChangeTimeout);
     }
 
+    public componentWillUnmount(){
+        if (this.timeoutInProgress) {
+            clearTimeout(this.timeoutInProgress);
+        }
+    }
+
     private updateState(newValue: number, inProgress: boolean, timeout: number){
         if (this.timeoutInProgress) {
             clearTimeout(this.timeoutInProgress);

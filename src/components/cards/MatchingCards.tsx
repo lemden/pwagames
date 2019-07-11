@@ -165,12 +165,12 @@ class MatchingCardsBoard
                             );
                         }
                     );
-                }, this.props.settings.hideIfSucceedTimeout || 1000);
+                }, this.props.settings.hideIfSucceedTimeout || 500);
             } else {
                 setTimeout(() => {
                     this.hideSelectedCards(selectedCards);
                     resolve({ points: 0 });
-                }, this.props.settings.hideIfFailedTimeout || 1000)
+                }, this.props.settings.hideIfFailedTimeout || 500)
             }
         });
     }

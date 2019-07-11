@@ -29,6 +29,7 @@ class ScoreMenu extends React.Component<IScoreMenuProps> {
                     {this.props.players.map(
                         (player, index) => (
                             <div 
+                                key={`player_score_${index}`}
                                 className={this.props.activePlayerIndex === index ? "active" : ""}
                                 style={{
                                 width: `${singlePlayerContainerWidth}%`

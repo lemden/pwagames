@@ -58,24 +58,24 @@ const getColsAndRows = (numberOfCards: number) => {
 
 
 export
-const getNumberOfUniqueCards = (level: GameLevel) => {
+const getGameSettings = (level: GameLevel) => {
     return {
-        1: 3,
-        2: 4,
-        3: 5,
-        4: 6,
-        5: 8,
-        6: 9,
-        7: 10,
-        8: 12,
-        9: 14,
-        10: 15
+        1: {cards: 3, time: 15},
+        2: {cards: 4, time: 15},
+        3: {cards: 5, time: 30},
+        4: {cards: 6, time: 40},
+        5: {cards: 8, time: 50},
+        6: {cards: 9, time: 50},
+        7: {cards: 10, time: 60},
+        8: {cards: 12, time: 70},
+        9: {cards: 14, time: 80},
+        10: {cards: 15, time: 90},
     }[level];
 };
 
 export
 const getNumberCards = (level: GameLevel): ICardDefinition[] => {
-    const temp: ICardDefinition[] = new Array(getNumberOfUniqueCards(level))
+    const temp: ICardDefinition[] = new Array(getGameSettings(level).cards)
                     .fill(null)
                     .map((value, index) => ({
                         cardStyle: getRandomNumberCardStyle(index + 1 + ""),
